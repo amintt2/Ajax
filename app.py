@@ -16,12 +16,12 @@ def home():
 @app.route('/api/products', methods=['GET'])
 def getProducts():
     #cursor=connectTodDB()
+    # mysql --user=tatouzi -p --host=serveurmysql.iut-bm.univ-fcomte.fr --database=BDD_tatouzi
     mydb = mysql.connector.connect(
-      host="localhost",
-      port="8889",
-      user="root",
-      password="root",
-      database="flask"
+      host="serveurmysql.iut-bm.univ-fcomte.fr",
+      user="tatouzi",
+      password="mdp",
+      database="BDD_tatouzi"
     )
     cursor = mydb.cursor()
     sql="SELECT codePrestation, prestation FROM Prestation"
