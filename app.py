@@ -10,7 +10,7 @@ app.config["DEBUG"] = True
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('solus.html')
+    return render_template('index.html')
 
 
 @app.route('/api/products', methods=['GET'])
@@ -38,11 +38,10 @@ def getProducts():
 def getProduct():
     #cursor=connectTodDB()
     mydb = mysql.connector.connect(
-      host="localhost",
-      port="8889",
-      user="root",
-      password="root",
-      database="flask"
+      host="serveurmysql.iut-bm.univ-fcomte.fr",
+      user="tatouzi",
+      password="mdp",
+      database="BDD_tatouzi"
     )
 
     if 'codePrestation' in request.args:
@@ -65,11 +64,10 @@ def getProduct():
 def getClient():
     #cursor=connectTodDB()
     mydb = mysql.connector.connect(
-      host="localhost",
-      port="8889",
-      user="root",
-      password="root",
-      database="flask"
+      host="serveurmysql.iut-bm.univ-fcomte.fr",
+      user="tatouzi",
+      password="mdp",
+      database="BDD_tatouzi"
     )
 
     if 'codeClient' in request.args:
@@ -78,7 +76,7 @@ def getClient():
         return "Error: No codeClient provided. Please specify a codeClient."
 
     cursor = mydb.cursor()
-    sql="SELECT codeClient, civilite, nom, prenom, adresse, codePostal, ville, Carte.carte, remise FROM Client, Carte where codeClient="+codeClient+" and Client.carte=Carte.codeCarte"
+    sql="SELECT codeClient, civilite, nom, prenom, adresse, codePostal, ville, Carte.carte, remise FROM Client, Carte where codeClient='"+codeClient+"' and Client.carte=Carte.codeCarte"
     cursor.execute(sql)
     results = cursor.fetchall()
     row_headers=[x[0] for x in cursor.description] #get headers
@@ -93,11 +91,10 @@ def getClient():
 @app.route('/api/order', methods=['POST'])
 def newOrder():
     mydb = mysql.connector.connect(
-      host="localhost",
-      port="8889",
-      user="root",
-      password="root",
-      database="flask"
+      host="serveurmysql.iut-bm.univ-fcomte.fr",
+      user="tatouzi",
+      password="mdp",
+      database="BDD_tatouzi"
     )
     cursor = mydb.cursor()
     orderDate= datetime.datetime.now()
@@ -120,7 +117,6 @@ def newOrder():
         mydb.commit()
     cursor.close()
     return "order saved."
-
 
 
 app.run()
